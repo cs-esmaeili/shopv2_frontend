@@ -1,0 +1,8 @@
+{
+    "app_name": "Emeral",
+    "base_url": "http://localhost/shopv2/",
+    "api_url": "http://localhost/shopv2/api/admin/",
+    "web_url": "/panel/",
+    "logo_url": "http://localhost/shopv2/system/logo.png",
+    "timeOut": 20
+}
