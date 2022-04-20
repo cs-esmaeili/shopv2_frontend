@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import useGenerator from "../../global/Idgenerator";
 import { _categoryListPure } from "../../services/Category";
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, FieldArray } from 'formik';
 import { createProductSchema } from '../../global/validator_Schemas';
 import SelectFolder from './../components/modals/SelectFolder';
 import { toast } from 'react-toastify';
@@ -40,6 +40,8 @@ const CreateProduct = ({ edit = false, data = null, onSubmit = null }) => {
             stock: values.stock,
             description: values.description,
             image_folder: images.foler_path,
+            review: values.review,
+            items: values.items,
             product_id: -1,
         }
         if (edit) {
@@ -84,7 +86,6 @@ const CreateProduct = ({ edit = false, data = null, onSubmit = null }) => {
     useEffect(() => {
         getCtegorysPure();
         if (edit) {
-            console.log(data.status);
             setCategory_id((edit) ? data.category_id : null);
             setCategoryPure(null);
             publicFolderFiles(data.image_folder);
@@ -108,6 +109,8 @@ const CreateProduct = ({ edit = false, data = null, onSubmit = null }) => {
                     description: (edit) ? data.description : '',
                     file: (edit) ? true : false,
                     category_id: (edit) ? true : false,
+                    review: (edit) ? data.review : '',
+                    items: (edit) ? data.items : [],
                 }}
                 enableReinitialize={true}
                 validationSchema={createProductSchema}
@@ -291,6 +294,78 @@ const CreateProduct = ({ edit = false, data = null, onSubmit = null }) => {
                                                 </div>
                                             </div>
                                         </div>
+                                        <div className='row mt-2'>
+                                            <div className='col-12'>
+                                                <div className="card shadow">
+                                                    <div className="card-header">
+                                                        <h6 className="font-weight-bold text-primary">نقد و برسی کالا</h6>
+                                                    </div>
+                                                    <div className="card-body" >
+                                                        <div className="form-group">
+                                                            <Field className="form-control form-control-user" name="review" placeholder="نقد و برسی کالا" style={{ textAlign: "right", direction: "rtl" }} />
+                                                            {errors.review && touched.review ? (
+                                                                <div style={{ color: "red" }}>{errors.review}</div>
+                                                            ) : null}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <FieldArray
+                                            name="items"
+                                            render={arrayHelpers => (
+                                                <div className='mt-2' style={{ display: 'flex', flexDirection: "row-reverse", flexWrap: 'wrap' }}>
+                                                    {values.items && values.items.length > 0 && (
+                                                        values.items.map((item, index) => (
+                                                            <div className='col-3 mb-2'>
+                                                                <div className="card shadow">
+                                                                    <div className="card-header">
+                                                                        <h6 className="font-weight-bold text-primary">مشخصات کالا</h6>
+                                                                    </div>
+                                                                    <div className="card-body" >
+                                                                        <div className="form-group">
+                                                                            <div className='row'>
+                                                                                <div className='col'>
+                                                                                    <Field className="form-control form-control-user" name="key" value={item.value}
+                                                                                        placeholder="مقدار" style={{ textAlign: "center", direction: "rtl" }}
+                                                                                        onChange={(e) => {
+                                                                                            let newItem = item;
+                                                                                            newItem.value = e.target.value;
+                                                                                            arrayHelpers.replace(index, newItem);
+                                                                                        }}
+                                                                                    />
+                                                                                </div>
+                                                                                <div className='col'>
+                                                                                    <Field className="form-control form-control-user" name="value" value={item.key}
+                                                                                        placeholder="مشخصه" style={{ textAlign: "center", direction: "rtl" }}
+                                                                                        onChange={(e) => {
+                                                                                            let newItem = item;
+                                                                                            newItem.key = e.target.value;
+                                                                                            arrayHelpers.replace(index, newItem);
+                                                                                        }}
+                                                                                    />
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <button type="button" className="btn btn-danger" style={{ width: "100%" }} onClick={() => arrayHelpers.remove(index)}>حذف</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        ))
+                                                    )}
+                                                    <div className='col-3 mb-2'>
+                                                        <label style={{
+                                                            display: "flex", width: "100%", height: "100%", alignItems: "center", justifyContent: "center"
+                                                        }} onClick={() => arrayHelpers.push({ key: "", value: "" , item_id : -1 })}>
+                                                            <i className="fa fa-plus" aria-hidden="true" style={{ textAlign: "center", fontSize: "100px" }}></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        />
+                                        {errors.items && touched.items ? (
+                                            <div style={{ color: "red" }}>{errors.items}</div>
+                                        ) : null}
                                         <div className='row mt-2'>
                                             <div className='col-12'>
                                                 <div className="card shadow">

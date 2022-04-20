@@ -20,7 +20,7 @@ const ContentWrapper = () => {
         <div id="content-wrapper" className="d-flex flex-column">
             <div id="content">
                 <Navbar />
-                <div className="container-fluid">
+                <div className="container-fluid" style={{maxHeight:'80vh' , overflowY:"auto"}}>
                     <PermissionDenid />
                     <Switch>
                         <Route path={[config.web_url + "siteIndex_page"]}>

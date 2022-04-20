@@ -48,5 +48,6 @@ export const createProductSchema = Yup.object().shape({
         .required(messages('required')),
     file: Yup.boolean().oneOf([true], messages('imageRequired')),
     category_id: Yup.boolean().oneOf([true], messages('selectRequired')),
+    items: Yup.array().min(1, messages('selectRequired'))
 
 });
