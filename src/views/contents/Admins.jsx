@@ -104,7 +104,6 @@ const Admins = () => {
         }
         if (validator.current.allValid()) {
             try {
-                console.log(data);
                 if (selecting) {
                     const response = await _EditPerson(data);
                     if (response.data.statusText === "ok") {
