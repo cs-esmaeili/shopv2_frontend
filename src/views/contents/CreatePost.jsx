@@ -3,7 +3,6 @@ import JoditEditor from "jodit-react";
 import { _createPost, _updatePost } from './../../services/Post';
 import { toast } from 'react-toastify';
 import { _categoryListPure } from "../../services/Category";
-import useGenerator from "../../global/Idgenerator";
 import { useSelector } from 'react-redux';
 
 const CreatePost = ({ edit = false, data = null, onSubmit = null }) => {
@@ -15,7 +14,6 @@ const CreatePost = ({ edit = false, data = null, onSubmit = null }) => {
     const [title, setTitle] = useState((edit) ? data.title : '');
     const [description, setDescription] = useState((edit) ? data.description : '');
     const [meta_keywords, setMeta_keywords] = useState((edit) ? data.meta_keywords : '');
-    const [generateID] = useGenerator();
     const permission = useSelector(state => state.profile.permissions).includes('createPost_page');
 
     const getCtegorysPure = async () => {
@@ -23,7 +21,9 @@ const CreatePost = ({ edit = false, data = null, onSubmit = null }) => {
             const respons = await _categoryListPure();
             if (respons.data.statusText === "ok") {
                 setCategoryPure(respons.data.list);
-                setCategory_id(respons.data.list[0].category_id);
+                if (!edit) {
+                    setCategory_id(respons.data.list[0].category_id);
+                }
             }
         } catch (error) { }
     }
@@ -64,12 +64,13 @@ const CreatePost = ({ edit = false, data = null, onSubmit = null }) => {
     useEffect(() => {
         getCtegorysPure();
         if (edit) {
-            setCategory_id((edit) ? data.category_id : null);
+            console.log(data.category_id);
+            setCategory_id(data.category_id);
             setCategoryPure(null);
-            setImage((edit) ? data.image : '');
-            setTitle((edit) ? data.title : '');
-            setDescription((edit) ? data.description : '');
-            setMeta_keywords((edit) ? data.meta_keywords : '');
+            setImage(data.image);
+            setTitle(data.title);
+            setDescription(data.description);
+            setMeta_keywords(data.meta_keywords);
         }
     }, [data]);
 
@@ -90,15 +91,21 @@ const CreatePost = ({ edit = false, data = null, onSubmit = null }) => {
                                     <h6 className="font-weight-bold text-primary">دسته بندی</h6>
                                 </div>
                                 <div className="card-body" >
-                                    {categoryPure != null && categoryPure.length > 0 ?
-                                        <select value={category_id} className="form-control justify-content-center" style={{ direction: "rtl" }} onChange={(e) => setCategory_id(e.target.value)}>
-                                            {categoryPure.map(element => <option key={generateID()} value={element.category_id}>{element.name}</option>)}
+                                    {categoryPure != null && category_id != null && categoryPure.length > 0 ?
+                                        <select
+                                            value={category_id}
+                                            className="form-control justify-content-center" style={{ direction: "rtl" }}
+                                            onChange={(e) => setCategory_id(e.target.value)}>
+                                            {
+                                                categoryPure.map(element => <option value={element.category_id}>{element.name}</option>)
+                                            }
                                         </select>
                                         :
                                         <span>
                                             ابتدا در بخش دسته بندی دسته بندی ایجاد کنید
                                         </span>
                                     }
+
                                 </div>
                             </div>
                         </div>

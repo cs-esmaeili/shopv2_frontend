@@ -12,7 +12,6 @@ const PostList = () => {
     const getPosts = async () => {
         try {
             const respons = await _postList();
-            console.log(respons);
             if (respons.data.statusText === "ok") {
                 setPosts(respons.data.list);
                 setData(respons.data.list[0]);
