@@ -45,7 +45,6 @@ const Sidebar = () => {
                     </div>
                     <div id="collapseAdmin" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div className="bg-white py-2 collapse-inner rounded">
-                            <h6 className="collapse-header">اجزا شخصی سازی شده</h6>
                             {permission.includes('admins_page') &&
                                 <Link
                                     className="collapse-item"
