@@ -14,6 +14,7 @@ import PostList from './../../contents/PostList';
 import SiteIndex from './../../contents/SiteIndex';
 import CreateProduct from './../../contents/CreateProduct';
 import ProductList from './../../contents/ProductList';
+import Factors from './../../contents/Factors';
 
 const ContentWrapper = () => {
     return (
@@ -49,6 +50,9 @@ const ContentWrapper = () => {
                         </Route>
                         <Route path={[config.web_url + "productList"]}>
                             <ProductList />
+                        </Route>
+                        <Route path={[config.web_url + "factors"]}>
+                            <Factors />
                         </Route>
                         <Route path={[config.web_url]}>
                             <Redirect to={config.web_url} />

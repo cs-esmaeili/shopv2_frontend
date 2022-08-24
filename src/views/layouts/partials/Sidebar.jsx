@@ -51,7 +51,7 @@ const Sidebar = () => {
                                     to={config.web_url + "admins"}
                                 >
                                     حساب ها
-                                 </Link>
+                                </Link>
                             }
                             {permission.includes('rolePermissions_page') &&
                                 <Link
@@ -59,7 +59,7 @@ const Sidebar = () => {
                                     to={config.web_url + "rolePermissions"}
                                 >
                                     قوانین و نقش ها
-                                 </Link>
+                                </Link>
                             }
                         </div>
                     </div>
@@ -111,7 +111,7 @@ const Sidebar = () => {
                                     to={config.web_url + "postList"}
                                 >
                                     لیست مطالب
-                               </Link>
+                                </Link>
                             }
                         </div>
                     </div>
@@ -141,10 +141,21 @@ const Sidebar = () => {
                                     to={config.web_url + "productList"}
                                 >
                                     لیست کالا ها
-                               </Link>
+                                </Link>
                             }
                         </div>
                     </div>
+                </li>
+            }
+            {permission.includes('factors_page') &&
+                <li className="nav-item">
+                    <Link
+                        className="nav-link"
+                        to={config.web_url + "factors"}
+                    >
+                        <span>سفارشات</span>
+                        <i className="fas fa-fw fa-tachometer-alt"></i>
+                    </Link>
                 </li>
             }
             <hr className="sidebar-divider d-none d-md-block" />

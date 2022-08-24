@@ -73,7 +73,7 @@ export const _MissingPermissions = (data) => {
 
 
 export const _CreatePerson = (data) => {
-    return http.post(`${config.api_url}createPerson`,  JSON.stringify(data), {
+    return http.post(`${config.api_url}createPerson`, JSON.stringify(data), {
         headers: {
             "Action": "createPerson",
         }
@@ -81,7 +81,7 @@ export const _CreatePerson = (data) => {
 };
 
 export const _EditPerson = (data) => {
-    return http.post(`${config.api_url}editPerson`,  JSON.stringify(data), {
+    return http.post(`${config.api_url}editPerson`, JSON.stringify(data), {
         headers: {
             "Action": "editPerson",
         }
@@ -94,4 +94,10 @@ export const _personProfile = () => {
             "Action": "personProfile",
         }
     });
+};
+export const _factorsList = (data) => {
+    return http.post(`${config.api_url}factorsList`, JSON.stringify(data));
+};
+export const _changeFactorStatus = (data) => {
+    return http.post(`${config.api_url}changeFactorStatus`, JSON.stringify(data));
 };

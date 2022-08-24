@@ -16,7 +16,6 @@ const Main = () => {
     const checkToken = async () => {
         try {
             const respons = await CheckToken();
-            console.log(respons);
             if (respons.data.statusText === "ok") {
                 return true;
             } else {
